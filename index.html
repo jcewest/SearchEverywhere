@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Everywhere</title>
+<style>
+  :root {
+    --primary-color: #4a90e2;
+    --bg-color: #f8f9fa;
+    --text-color: #333;
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+  }
+  main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  form {
+    background: #fff;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px;
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  label {
+    margin-right: 0.5rem;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+  }
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
+  .sites {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+  .sites label {
+    display: flex;
+    align-items: center;
+  }
+  button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--primary-color);
+    border: none;
+    color: #fff;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+  button:hover {
+    background: #3b78c7;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Search Everywhere</h1>
+</header>
+<main>
+  <form id="searchForm">
+    <div class="form-group">
+      <input type="text" id="query" placeholder="Enter search query" required>
+    </div>
+    <div class="form-group sites">
+      <label><input type="checkbox" name="site" value="https://www.blocket.se/annonser/hela_sverige?s=%QUERY%" checked> Blocket</label>
+      <label><input type="checkbox" name="site" value="https://www.tradera.com/search?q=%QUERY%" checked> Tradera</label>
+      <label><input type="checkbox" name="site" value="https://cdon.se/search?q=%QUERY%" checked> CDON</label>
+      <label><input type="checkbox" name="site" value="https://www.elgiganten.se/search/%QUERY%" checked> Elgiganten</label>
+    </div>
+    <button type="submit">Search</button>
+  </form>
+</main>
+<script>
+  document.getElementById('searchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const query = encodeURIComponent(document.getElementById('query').value.trim());
+    document.querySelectorAll('input[name="site"]:checked').forEach(input => {
+      const url = input.value.replace('%QUERY%', query);
+      window.open(url, '_blank');
+    });
+  });
+</script>
+</body>
+</html>
